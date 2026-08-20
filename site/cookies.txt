@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+autogang.impactforge.cloud	TRUE	/	FALSE	1999999999	__cf_bm	QWztg35jynPWIzVSYAXZv5zjPzsB.ep9ybPkGF0QOMo-1786991267.8296287-1.0.1.1-oX0LCqQJCmJCo.YezrinTimfoVK6exba0b2_3yigMDdXTYzKCo28hWn4LIdowGel8CaDQ81gvjgI5NKp7B40j737Z3GgFzDrY8eD0tcDLuBzDJMKyy3faoA0wau1mCrh
+autogang.impactforge.cloud	TRUE	/	FALSE	1999999999	SameSite	None
+
