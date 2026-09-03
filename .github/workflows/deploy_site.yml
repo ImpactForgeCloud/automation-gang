@@ -1,0 +1,46 @@
+name: Test & Deploy Site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy_site.yml"
+      - ".github/workflows/lighthouserc.json"
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy_site.yml"
+      - ".github/workflows/lighthouserc.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: '.github/workflows/lighthouserc.json'
+
+  deploy:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: static-analysis
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Report AWS id
+        run: aws sts get-caller-identity
+      - run: aws s3 sync site/ s3://${{ vars.S3_BUCKET }} --delete
+      - run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRO_ID }} --paths "/*"
+# pick the name for the distro, same you did for the bucket
