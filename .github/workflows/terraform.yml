@@ -1,11 +1,11 @@
 name: Terraform
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "terraform/**"
-      - ".github/workflows/terraform.yml"
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "terraform/**"
+  #     - ".github/workflows/terraform.yml"
   pull_request:
     branches: [main]
     paths:
@@ -14,9 +14,13 @@ on:
   workflow_dispatch:
     inputs:
         apply:
-          description: "Run Terraform apply"
+          description: "Apply Terraform?"
           type: boolean
           default: false
+
+concurrency:
+  group: aws-prod
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -24,8 +28,6 @@ permissions:
 
 jobs:
   fmt-validate:
-    permissions:
-      id-token: write
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -35,5 +37,64 @@ jobs:
       - uses: hashicorp/setup-terraform@v4
       - run: terraform fmt -check -recursive
         continue-on-error: true
-      - run: terraform init -input=false
+      - run: terraform init -input=false -backend=false
       - run: terraform validate
+
+  plan:
+    #if: github.event_name == 'workflow_dispatch'
+    needs: fmt-validate
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - run: terraform init -input=false
+      - run: terraform plan -input=false -no-color -out=tfplan
+      - run: terraform show -no-color tfplan > tfplan.txt
+      - name: Upload binary plan
+        uses: actions/upload-artifact@v7
+        with:
+          name: tfplan
+          path: terraform
+          retention-days: 2
+      - name: Upload readable plan
+        uses: actions/upload-artifact@v7
+        with:
+          name: tfplan.txt
+          path: terraform
+          archive: false
+          retention-days: 2
+
+  apply:
+    if: github.event_name == 'workflow_dispatch' && inputs.apply == true
+    needs: plan
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    environment: prod
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: tfplan
+          path: terraform
+      - run: terraform init -input=false
+      - run: terraform apply -auto-approve tfplan
+
+  

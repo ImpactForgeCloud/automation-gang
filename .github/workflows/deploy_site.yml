@@ -1,12 +1,12 @@
-name: Test & Deploy Site
+name: Deploy Site
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "site/**"
-      - ".github/workflows/deploy_site.yml"
-      - ".github/workflows/lighthouserc.json"
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "site/**"
+  #     - ".github/workflows/deploy_site.yml"
+  #     - ".github/workflows/lighthouserc.json"
   pull_request:
     branches: [main]
     paths:
@@ -14,6 +14,10 @@ on:
       - ".github/workflows/deploy_site.yml"
       - ".github/workflows/lighthouserc.json"
   workflow_dispatch:
+
+concurrency:
+  group: aws-prod
+  cancel-in-progress: false
 
 permissions:
   contents: read

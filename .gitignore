@@ -49,6 +49,7 @@ secrets/
 *.tfstate
 *.tfstate.*
 *.tfplan
+tfplan
 crash.log
 crash.*.log
 override.tf
@@ -122,4 +123,6 @@ temp/
 # ========================
 *.local
 .direnv/
+
+
 
