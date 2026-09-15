@@ -1,11 +1,8 @@
 locals {
   bucket_name = "${var.project_name}-site"
   tags = {
-    type = map(string)
-    default = {
-      Project   = var.project_name
-      ManagedBy = "terraform"
-    }
+    Project   = var.project_name
+    ManagedBy = "terraform"
   }
 }
 
