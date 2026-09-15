@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
         apply:
-          description: "Apply Terraform?"
+          description: "Terraform apply?"
           type: boolean
           default: false
 
