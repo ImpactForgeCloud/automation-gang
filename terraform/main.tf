@@ -1,10 +1,17 @@
 locals {
   bucket_name = "${var.project_name}-site"
+  tags = {
+    type = map(string)
+    default = {
+      Project   = var.project_name
+      ManagedBy = "terraform"
+    }
+  }
 }
 
 resource "aws_s3_bucket" "site" {
   bucket = local.bucket_name
-  tags   = var.tags
+  tags   = local.tags
 }
 
 resource "aws_s3_bucket_ownership_controls" "site" {
