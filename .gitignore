@@ -59,11 +59,11 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# Keep the lock file (recommended)
+# Keep the lock file
 # .terraform.lock.hcl
 
 # ========================
-# Node / Frontend (future-proof)
+# Node / Frontend
 # ========================
 node_modules/
 npm-debug.log*
@@ -82,7 +82,7 @@ build/
 .turbo/
 
 # ========================
-# Python (future-proof)
+# Python
 # ========================
 __pycache__/
 *.py[cod]

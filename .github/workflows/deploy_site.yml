@@ -46,5 +46,5 @@ jobs:
       - name: Report AWS id
         run: aws sts get-caller-identity
       - run: aws s3 sync site/ s3://${{ vars.S3_BUCKET }} --delete
-      - run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRO_ID }} --paths "/*"
-# pick the name for the distro, same you did for the bucket
+      # - run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRO_ID }} --paths "/*"
+
