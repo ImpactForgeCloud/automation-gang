@@ -19,7 +19,7 @@ resource "aws_s3_bucket_ownership_controls" "site" {
 }
 
 resource "aws_s3_bucket_public_access_block" "site" {
-  bucket = aws_s3_bucket.site.id
+  bucket                  = aws_s3_bucket.site.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -28,7 +28,6 @@ resource "aws_s3_bucket_public_access_block" "site" {
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "site" {
   bucket = aws_s3_bucket.site.id
-
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
@@ -45,7 +44,7 @@ resource "aws_s3_bucket_versioning" "site" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "site" {
-  bucket = aws_s3_bucket.site.id
+  bucket     = aws_s3_bucket.site.id
   depends_on = [aws_s3_bucket_versioning.site]
   rule {
     id     = "expire-noncurrent"
