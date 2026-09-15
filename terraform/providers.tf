@@ -8,8 +8,8 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket       = "tfstate8"
-    key          = "${var.project_name}/terraform.tfstate"
-    region       = var.aws_region
+    key          = "autogang/terraform.tfstate"
+    region       = "us-east-1"
     encrypt      = true
     use_lockfile = true
   }
