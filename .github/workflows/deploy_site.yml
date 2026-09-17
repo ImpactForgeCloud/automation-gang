@@ -43,8 +43,8 @@ jobs:
         with:
           role-to-assume: ${{secrets.AWS_ROLE_ARN}}
           aws-region: ${{vars.AWS_REGION}}
-      - name: Report AWS id
-        run: aws sts get-caller-identity
+      # - name: Report AWS id
+      #   run: aws sts get-caller-identity
       - run: aws s3 sync site/ s3://${{vars.S3_BUCKET}} --delete
       # - run: aws cloudfront create-invalidation --distribution-id ${{ vars.CLOUDFRONT_DISTRO_ID }} --paths "/*"
 
