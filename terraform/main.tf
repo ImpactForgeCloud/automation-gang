@@ -1,5 +1,5 @@
 module "site_bucket" {
-  source       = "./modules/site-bucket"
+  source       = "./modules/site_bucket"
   project_name = var.project_name
   tags         = var.tags
 }

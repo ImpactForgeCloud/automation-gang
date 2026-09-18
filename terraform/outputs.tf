@@ -1,5 +1,5 @@
 output "site_bucket_name" {
-  value = module.site_bucket.bucket_id
+  value = module.site_bucket.bucket_name
 }
 
 output "cloudfront_domain_name" {
