@@ -5,8 +5,8 @@ variable "project_name" {
 }
 
 variable "tags" {
-  type        = map(string)
-  default     = {
+  type = map(string)
+  default = {
     Project   = "autogang"
     ManagedBy = "terraform"
   }

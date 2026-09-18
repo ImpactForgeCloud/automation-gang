@@ -5,3 +5,7 @@ variable "project_name" {
 variable "tags" {
   type = map(string)
 }
+
+variable "bucket_domain_name" {
+  type = string
+}
