@@ -9,3 +9,8 @@ variable "tags" {
 variable "bucket_domain_name" {
   type = string
 }
+
+variable "origin_id" {
+  type    = string
+  default = "site_bucket"
+}

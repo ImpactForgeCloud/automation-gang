@@ -1,7 +1,3 @@
-locals {
-  origin_id = "s3_bucket"
-}
-
 data "aws_cloudfront_cache_policy" "caching_optimized" {
   name = "Managed-CachingOptimized"
 }
@@ -16,15 +12,14 @@ resource "aws_cloudfront_distribution" "site" {
   aliases             = [] // add the domain when ACM exists
   tags                = var.tags
 
-
   origin {
     domain_name = var.bucket_domain_name
-    origin_id   = local.origin_id
+    origin_id   = var.origin_id
     // origin_access_control_id = aws_cloudfront_origin_access_control.site.id  # next
   }
 
   default_cache_behavior {
-    target_origin_id       = local.origin_id
+    target_origin_id       = var.origin_id
     viewer_protocol_policy = "redirect-to-https"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
