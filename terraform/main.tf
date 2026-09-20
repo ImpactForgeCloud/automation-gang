@@ -10,4 +10,3 @@ module "cloudfront" {
   tags               = var.tags
   bucket_domain_name = module.site_bucket.bucket_domain_name
 }
-
