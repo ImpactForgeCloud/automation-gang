@@ -99,5 +99,3 @@ jobs:
           path: terraform
       - run: terraform init -input=false
       - run: terraform apply -auto-approve tfplan
-
-  
