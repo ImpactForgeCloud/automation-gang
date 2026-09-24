@@ -17,6 +17,11 @@ variable "aws_region" {
   default = "us-east-1" # ACM and CloudFront need us-east-1 for a custom cert
 }
 
+variable "domain_name" {
+  type    = string
+  default = "autogang.impactforge.cloud"
+}
+
 
 
 
