@@ -1,12 +1,12 @@
 name: Deploy Site
 
 on:
-  # push:
-  #   branches: [main]
-  #   paths:
-  #     - "site/**"
-  #     - ".github/workflows/deploy_site.yml"
-  #     - ".github/workflows/lighthouserc.json"
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy_site.yml"
+      - ".github/workflows/lighthouserc.json"
   pull_request:
     branches: [main]
     paths:
