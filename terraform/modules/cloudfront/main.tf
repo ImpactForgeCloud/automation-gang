@@ -1,13 +1,25 @@
-data "aws_cloudfront_cache_policy" "caching_optimized" {
-  name = "Managed-CachingOptimized"
-}
-
 resource "aws_cloudfront_origin_access_control" "site" {
   name                              = "${var.project_name}-site-oac"
   description                       = "OAC for ${var.project_name} site bucket"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_cache_policy" "site" {
+  name        = "${var.project_name}-long"
+  default_ttl = 31536000
+  max_ttl     = 31536000
+  min_ttl     = 0
+
+  parameters_in_cache_key_and_forwarded_to_origin {
+    enable_accept_encoding_brotli = true
+    enable_accept_encoding_gzip   = true
+
+    cookies_config { cookie_behavior = "none" }
+    headers_config { header_behavior = "none" }
+    query_strings_config { query_string_behavior = "none" }
+  }
 }
 
 resource "aws_cloudfront_distribution" "site" {
@@ -32,7 +44,7 @@ resource "aws_cloudfront_distribution" "site" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     compress               = true
-    cache_policy_id        = data.aws_cloudfront_cache_policy.caching_optimized.id
+    cache_policy_id        = data.aws_cloudfront_cache_policy.site.id
   }
 
   restrictions {
