@@ -41,10 +41,10 @@ Repo purpose: a replayable production release, not a landing page.
 ## Operational Excellence
 
 - Two workflows: `deploy_site.yml`, `terraform.yml` (format, validate, plan, manual apply)
-- `push` to `site/`: `deploy_site.yml` automatically deploys website changes.
-- Path filter `site/`: `deploy_site.yml` only runs on `site/`changes.
-- `push` to `terraform/`: `terraform.yml` automatically uploads `plan.txt`.
-- Path filter `terraform/`: `terraform.yml` only runs on `terraform/` changes.
+- `push` to site/: `deploy_site.yml` automatically deploys website changes.
+- Path filter site/: `deploy_site.yml` only runs on site/ changes.
+- `push` to terraform/: `terraform.yml` automatically uploads `plan.txt`.
+- Path filter terraform/: `terraform.yml` only runs on terraform/ changes.
 - Terraform module layout for code organization and maintainability.
 - TLS certificate auto renewal.
 
