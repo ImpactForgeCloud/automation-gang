@@ -6,7 +6,7 @@ Repo purpose: a replayable production release, not a landing page.
 
 ## Architecture
 
-![Production delivery architecture](architecture.jpg)\n
+![Production delivery architecture](architecture.jpg)
 - Main components: IAM (identities, permissions), S3 (host), CloudFront (CDN), Route 53 (DNS), ACM (TLS certificate), OIDC (secure auth), WAF (firewall), GitHub Actions (CI/CD), Terraform (IaC).
 - Terraform modules: `site_bucket`, `cloudfront`, `dns`.
 
