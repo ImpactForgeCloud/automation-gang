@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "site" {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     compress               = true
-    cache_policy_id        = data.aws_cloudfront_cache_policy.site.id
+    cache_policy_id        = aws_cloudfront_cache_policy.site.id
   }
 
   restrictions {
