@@ -1,3 +1,8 @@
+data "aws_wafv2_web_acl" "waf_acl" {
+  name  = "CreatedByCloudFront-dae7b665"
+  scope = "CLOUDFRONT"
+}
+
 resource "aws_cloudfront_origin_access_control" "site" {
   name                              = "${var.project_name}-site-oac"
   description                       = "OAC for ${var.project_name} site bucket"
@@ -28,7 +33,8 @@ resource "aws_cloudfront_distribution" "site" {
   comment             = "${var.project_name} site"
   default_root_object = "index.html"
   http_version        = "http2and3"
-  price_class         = "PriceClass_100"
+  price_class         = "PriceClass_All"
+  web_acl_id          = data.aws_wafv2_web_acl.waf_acl.arn
   aliases             = [var.domain_name, "www.${var.domain_name}"]
   tags                = var.tags
 

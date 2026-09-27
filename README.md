@@ -32,7 +32,7 @@ Repo purpose: a replayable production release, not a landing page.
 ## Performance
 
 - CloudFront distribution: geo proximity to users, low latency, great end user experience.
-- Maxed-out cache to 1 year: website is infrequently changed, and caching means fast website.
+- Maxed-out cache to 1 year: website is infrequently changed. Long caching means faster website.
 - Automatic cache invalidation after site changes: always fresh content.
 - Automatic Lighthouse CI testing on `push`: performs audits on the website. Speed, best practices, SEO.
 - Edge computing can be done if necessary.
